@@ -1,15 +1,13 @@
-# code_camp
+result_type_1_first_run: first run with only age
+result_type_3_second_run: with optimized data for type 3 with rare emotions and age range
 
-To install dependencies:
+GENDER = blip
+RACE = df
+BBOX = df
+AGE = df x blip
+EMOTION = df x blip
 
-```bash
-bun install
-```
+the rest (not within the above):
 
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.12. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+- age = blip
+- emotion = df

@@ -13,7 +13,8 @@ import {
 
 // Generate 100 random superheroes
 const superheroes: Superhero[] = Array.from({ length: 1500 }, () => ({
-  uuid: crypto.randomUUID(),
+  file_name: crypto.randomUUID(),
+  bbox: [],
   gender: getRandomEnumValue(Gender),
   emotion: getRandomEnumValue(Emotion),
   age: getRandomEnumValue(Age),
@@ -33,7 +34,7 @@ const heroes = readSuperheroesFromFile('superheroes.json');
 // console.log(heroes);
 fs.writeFile(
   'combination.json',
-  JSON.stringify(groupHeroes(superheroes), null, 2),
+  JSON.stringify(groupHeroes(heroes), null, 2),
   (err) => {
     console.log(err);
   }

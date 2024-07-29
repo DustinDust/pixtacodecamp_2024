@@ -22,8 +22,8 @@ export enum Age {
   Baby = 'Baby',
   Kid = 'Kid',
   Teenager = 'Teenager',
-  YoungAdult = 'YoungAdult',
-  MaturedAdult = 'MaturedAdult',
+  YoungAdult = '20-30s',
+  MaturedAdult = '40-50s',
   Senior = 'Senior',
 }
 
@@ -34,7 +34,8 @@ export enum Gender {
 
 // Superhero type definition
 export type Superhero = {
-  uuid: string;
+  file_name: string;
+  bbox: number[];
   gender: Gender;
   emotion: Emotion;
   age: Age;
@@ -121,7 +122,7 @@ export function groupHeroes(heroes: Superhero[]): {
 } {
   let points = 0;
   const groups: GroupResult[] = [];
-  const usedUuids = new Set<string>();
+  const usedFileNames = new Set<number>();
 
   const heroList = [...heroes];
 
@@ -130,19 +131,19 @@ export function groupHeroes(heroes: Superhero[]): {
     groupType: GroupType
   ): Superhero[] | null => {
     for (let i = 0; i < heroList.length - 3; i++) {
-      if (usedUuids.has(heroList[i].uuid)) continue;
+      if (usedFileNames.has(i)) continue;
       for (let j = i + 1; j < heroList.length - 2; j++) {
-        if (usedUuids.has(heroList[j].uuid)) continue;
+        if (usedFileNames.has(j)) continue;
         for (let k = j + 1; k < heroList.length - 1; k++) {
-          if (usedUuids.has(heroList[k].uuid)) continue;
+          if (usedFileNames.has(k)) continue;
           for (let l = k + 1; l < heroList.length; l++) {
-            if (usedUuids.has(heroList[l].uuid)) continue;
+            if (usedFileNames.has(l)) continue;
             const group = [heroList[i], heroList[j], heroList[k], heroList[l]];
             if (criteriaFn(group)) {
-              usedUuids.add(heroList[i].uuid);
-              usedUuids.add(heroList[j].uuid);
-              usedUuids.add(heroList[k].uuid);
-              usedUuids.add(heroList[l].uuid);
+              usedFileNames.add(i);
+              usedFileNames.add(j);
+              usedFileNames.add(k);
+              usedFileNames.add(l);
               groups.push({ group, type: groupType });
               points += 1;
               return group;
@@ -157,13 +158,13 @@ export function groupHeroes(heroes: Superhero[]): {
   let group: Superhero[] | null;
 
   // Prioritize forming Balance Guardians
-  while ((group = tryFormGroup(isBalanceGuardians, 'Balance Guardians'))) {}
+  while ((group = tryFormGroup(isBalanceGuardians, 'Balance Guardians'))) { console.log("still on balance") }
 
   // Then form Inside Out
-  while ((group = tryFormGroup(isInsideOut, 'Inside Out'))) {}
+  while ((group = tryFormGroup(isInsideOut, 'Inside Out'))) { console.log("still on inside out") }
 
   // Finally form The Incredibles
-  while ((group = tryFormGroup(isTheIncredibles, 'The Incredibles'))) {}
+  while ((group = tryFormGroup(isTheIncredibles, 'The Incredibles'))) { console.log("still on incredibles") }
 
   return { groups, points };
 }
